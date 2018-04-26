@@ -9,6 +9,8 @@ import sys
 # re - regex class: helps to deal with variables that contain 2 or more letter for example a1, a2, 9562 or omg.
 import re
 
+import util
+
 
 # Daniel provided two build-in methods of Python that can handle better than regex. They are isalnum() and isdigit().
 # However, in the loop to ask users if they want to do another expression, it's simpler with regex.
@@ -42,6 +44,10 @@ class Stack:
 
     def size(self):
         return len(self.items)
+
+
+def is_expression(string):
+    return string in ["+", "-", "/", "*"]
 
 
 # Method to convert infix to postfix
@@ -93,26 +99,36 @@ def infixToPostfix(userInput):
 
 # Postfix evaluation method, if the expressions contain only number
 # It will calculate output
-def postfixEval(postfixExpr):
+def postfixEval(postfixExpr, mem_dict):
     # Create stack to hold all arithmetic operations and number
     operandStack = Stack()
     # postfixExpr is the result of inFixtoPostfix method
     tokenList = postfixExpr.split()
-
+    stack = []
+    code = ""
     # Loop through the list
     # It checks 3 tokens from left to right at a time
+
     # For example 6 3 + 6 - meaning 6 + 3 = 9 then 9 - 6 = 3
     for token in tokenList:
         # If token in str(list(range(19998))): old manually check
-        if token.isdigit():
-            operandStack.push(int(token))
+        if token.isdigit() or token.isalpha():
+            reg = util.get_registration()
+            stack.append(reg)
+            code += util.return_iml_code("load") + reg + util.make_two_digit(str(mem_dict[token])) + "\n"
+            # operandStack.push(int(token))
         else:
-            operand2 = operandStack.pop()
-            operand1 = operandStack.pop()
-            result = doMath(token, operand1, operand2)
-            operandStack.push(result)
-    return operandStack.pop()
-
+            # operand2 = operandStack.pop()
+            # operand1 = operandStack.pop()
+            # result = doMath(token, operand1, operand2)
+            # operandStack.push(result)
+            code += util.return_iml_code(util.ops_to_string(token)) + stack.pop() + stack.pop()
+            # while not stack:
+            #     code += stack.pop()
+            #     print(code)
+    # print(stack)
+    # return operandStack.pop()
+    return code
 
 # Method to calculate the postfix
 def doMath(op, op1, op2):

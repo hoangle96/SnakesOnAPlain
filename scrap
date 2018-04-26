@@ -1,0 +1,18 @@
+ if "get" in statement:
+                statement_split = statement.split("=")
+                for t in statement_split:
+                    if not t == "get":
+                        mem = mem_dict[t]
+
+
+                     elif "let" in statement:
+                if util.check_expression(statement):
+                    print("deal with this")
+                else:
+                    statement_split = statement.replace("\n", "").split("=")
+                    i0 = stack.index(statement_split[0])
+                    i1 = stack.index(statement_split[1])
+                    mem1 = (stack[i0])[statement_split[0]]
+                    mem2 = (stack[i1])[statement_split[1]]
+                    code = "22" + str(mem1) + str(mem2)
+                    print(code)

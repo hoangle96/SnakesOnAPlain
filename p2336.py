@@ -105,6 +105,7 @@ def postfixEval(postfixExpr, mem_dict):
     # postfixExpr is the result of inFixtoPostfix method
     tokenList = postfixExpr.split()
     stack = []
+    mem = []
     code = ""
     # Loop through the list
     # It checks 3 tokens from left to right at a time
@@ -113,8 +114,9 @@ def postfixEval(postfixExpr, mem_dict):
     for token in tokenList:
         # If token in str(list(range(19998))): old manually check
         if token.isdigit() or token.isalpha():
-            reg = util.get_registration()
+            reg = util.get_register()
             stack.append(reg)
+            mem.append(mem_dict[token])
             code += util.return_iml_code("load") + reg + util.make_two_digit(str(mem_dict[token])) + "\n"
             # operandStack.push(int(token))
         else:
@@ -122,7 +124,14 @@ def postfixEval(postfixExpr, mem_dict):
             # operand1 = operandStack.pop()
             # result = doMath(token, operand1, operand2)
             # operandStack.push(result)
-            code += util.return_iml_code(util.ops_to_string(token)) + stack.pop() + stack.pop()
+            reg2 = stack.pop()
+            mem2 = mem.pop()
+            reg1 = stack.pop()
+            mem1 = mem.pop()
+
+            code += util.return_iml_code(util.ops_to_string(token)) + reg1 + reg2 + "\n"
+            code += util.return_iml_code("store") + reg1 + str(mem1)
+
             # while not stack:
             #     code += stack.pop()
             #     print(code)

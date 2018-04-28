@@ -1,9 +1,7 @@
-5 cmt A program with a simple loop that counts down.
-10 get x
-15 get y
-20 if x = 0 goto 90
-30 output x
-40 let x = x - 1
-45 let x = 5
-50 goto 20
-90 stop
+10 let x = 0
+15 let y = 2
+25 let x = x + y
+30 let y = y + 2
+35 if 31 > y goto 25
+37 output x
+40 stop

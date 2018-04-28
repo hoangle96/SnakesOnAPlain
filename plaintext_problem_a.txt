@@ -1,0 +1,8 @@
+10 get x
+15 get y
+20 get z
+25 let x = x + y
+27 let x = x + z
+30 let x = x / 3
+35 output x
+35 stop

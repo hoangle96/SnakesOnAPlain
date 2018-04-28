@@ -1,6 +1,3 @@
-import sys
-import p2336 as p2
-
 import util
 
 
@@ -73,7 +70,8 @@ def main():
         for line in f.readlines():
             line = line.replace("\n", "")
             tokens = util.tokenizer(line, tokens)
-            sym_table, mem_dict, min_mem, max_mem, array_code = make_symbol_table(line, sym_table, mem_dict, min_mem, max_mem, array_code)
+            sym_table, mem_dict, min_mem, max_mem, array_code = make_symbol_table(line, sym_table, mem_dict, min_mem,
+                                                                                  max_mem, array_code)
             if "get" in line:
                 map_line, array_code, ln = util.get_statement(line, mem_dict, array_code, ln, map_line)
             elif "let" in line:
@@ -92,7 +90,8 @@ def main():
             if iml[0:2] == util.return_iml_code("branch"):
                 index = array_code.index(iml)
                 address = iml[4:6]
-                iml = util.return_iml_code("branch") + util.make_two_digit(str(array_code.index(map_line[address]))) +"00"
+                iml = util.return_iml_code("branch") + util.make_two_digit(
+                    str(array_code.index(map_line[address]))) + "00"
                 array_code[index] = iml
             else:
                 index = array_code.index(iml)
@@ -106,25 +105,8 @@ def main():
         if entry[0] == "C":
             array_code[entry[2]] = "0000" + util.make_two_digit(entry[1])
 
-    # print(tokens)
-    # print(sym_table)
-    # print(array_code)
-    # print(mem_dict)
-    # print(map_line)
-
-    print(mem_dict)
-
-    for i in array_code:
-        print(i)
-
-
-
-    # array_code[ln] = "990000"
-    # print(array_code)
-
     print_file(file_name, array_code)
-    # print("The file is called 'output.txt', at the same folder of the main file.")
-    # print(sym_table)
+    print("The file is called 'output.txt', at the same folder of the main file.")
 
 
 if __name__ == '__main__':

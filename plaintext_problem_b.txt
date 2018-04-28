@@ -1,7 +1,8 @@
+10 cmt sentinal is -1
 15 get a
 17 let a = a + 1
 20 if a = 0 goto 35
-22 let a = a -1
+22 let a = a - 1
 25 let e = e + a
 30 goto 15
 35 output e
